@@ -11,17 +11,16 @@ class Message:
     receiver: str
     message: str
     subject: str
-    creation_date: date
+    creation_date: date 
     is_read: bool
     id: int
 
 app = Flask(__name__)
+app.secret_key = 'super secret key'
+app.config['SESSION_TYPE'] = 'filesystem'
 
 messages = []
-messages.append(Message("ori","ori","hello","Today",date.today(),
-                             False,
-                             last_message_id +1))
-last_message_id +=1
+
 
 def login_required(f):
     @wraps(f)
@@ -113,6 +112,4 @@ def delete_message():
         return "Message not found"
 
 if __name__ == '__main__':
-    app.secret_key = 'super secret keyy'
-    app.config['SESSION_TYPE'] = 'filesystem'
-    app.run(host='0.0.0.0', port=80)
+    app.run(port=80, debug=True)
